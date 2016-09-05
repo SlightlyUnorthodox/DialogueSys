@@ -5,6 +5,7 @@ setup <- function(data.file = "godot.corpus.csv", speaker.col = 'speaker', dialo
     # Load required libraries
     library(dplyr)
     library(plyr)
+    library(ggplot2)
     library(ngramrr)
     library(NLP)
     #library(openNLP)
@@ -160,25 +161,40 @@ sequence.analysis <- function(corpus.data, speaker.one, speaker.two) {
 # 3. Descriptive Statistics
 descriptive.stats <- function(corpus.data, speaker.one, speaker.two) {
 
+    speaker.one.length <- corpus.data[which(corpus.data$speaker == speaker.one), "length"]
+    speaker.two.length <- corpus.data[which(corpus.data$speaker == speaker.two), "length"]
+
     # a) What is the median number of words per utterance for Speaker 1 in your data? For speaker 2?
-    speaker.one.median <- median(corpus.data[which(corpus.data$speaker == speaker.one), "length"])
-    speaker.two.median <- median(corpus.data[which(corpus.data$speaker == speaker.two), "length"])
+    speaker.one.median <- median(speaker.one.length)
+    speaker.two.median <- median(speaker.two.length)
     
-    cat("Speaker one", speaker.one, ", spoke a median of", speaker.one.median, "per utterance\n")
-    cat("Speaker two", speaker.two, ", spoke a median of", speaker.two.median, "per utterance\n")
+    cat("Speaker one", speaker.one, ", spoke a median of", speaker.one.median, "words per utterance\n")
+    cat("Speaker two", speaker.two, ", spoke a median of", speaker.two.median, "words per utterance\n")
 
     # b) What is the mode number of words per utterance for Speaker 1 and Speaker 2 ?
-    speaker.one.mode <- unique(corpus.data[which(corpus.data$speaker == speaker.one), "length"])
-    speaker.one.mode <- speaker.one.mode[which.max(tabulate(match(corpus.data[which(corpus.data$speaker == speaker.one), "length"], speaker.one.mode)))]
-    speaker.one.mode <- unique(corpus.data[which(corpus.data$speaker == speaker.one), "length"])
-    speaker.one.mode <- speaker.one.mode[which.max(tabulate(match(corpus.data[which(corpus.data$speaker == speaker.one), "length"], speaker.one.mode)))]
+    speaker.one.mode <- unique(speaker.one.length)
+    speaker.one.mode <- speaker.one.mode[which.max(tabulate(match(speaker.one.length, speaker.one.mode)))]
+    speaker.two.mode <- unique(speaker.two.length)
+    speaker.two.mode <- speaker.two.mode[which.max(tabulate(match(speaker.two.length, speaker.two.mode)))]
 
-    cat("Speaker one", speaker.one, ", spoke a mode of", speaker.one.mode, "per utterance\n")
-    cat("Speaker two", speaker.two, ", spoke a mode of", speaker.two.mode, "per utterance\n")
+    cat("Speaker one", speaker.one, ", spoke a mode of", speaker.one.mode, "words per utterance\n")
+    cat("Speaker two", speaker.two, ", spoke a mode of", speaker.two.mode, "words per utterance\n")
 
     # c) What is the standard deviation for the number of words per utterance for Speaker 1 and Speaker 2 ?
-    
+    speaker.one.sd <- sd(speaker.one.length)
+    speaker.two.sd <- sd(speaker.two.length)
+
+    cat("Speaker one", speaker.one, ", spoke with a standard deviation of", speaker.one.sd, "words per utterance\n")
+    cat("Speaker two", speaker.two, ", spoke with a standard deviation of", speaker.two.sd, "words per utterance\n")
+
     # d) Create a histogram of number of words per utterance for Speaker 1 and for Speaker 2. Provide the histogram in your writeup along with discussion and interpretation
+    ggplot(corpus.data, aes(length, fill = speaker)) + 
+    geom_histogram(alpha = 0.5, bins = 20, position = 'identity') + 
+    xlim(0, 50) +
+    xlab("# of Words per Utterance") +
+    ylab("Frequency") +
+    ggtitle("# of Words per Utterance by Speaker")
+
 }
 
 # 4. Hypothesis Testing
@@ -207,6 +223,9 @@ definition.practice <- function() {
 }
 
 # Executed Statements
+set.speaker.one <- "ESTRAGON"
+set.speaker.two <- "VLADIMIR"
 godot.data <- setup() # Load data from local source
-contingency.table(corpus.data = godot.data, word = "godot", speaker.one = "ESTRAGON", speaker.two = "VLADIMIR") # Complete part 1) of HW2
-sequence.analysis(corpus.data = godot.data, speaker.one = "ESTRAGON", speaker.two = "VLADIMIR") # Complare part 2) of HW2
+contingency.table(corpus.data = godot.data, word = "godot", speaker.one = set.speaker.one, speaker.two = set.speaker.two) # Complete part 1) of HW2
+sequence.analysis(corpus.data = godot.data, speaker.one = set.speaker.one, speaker.two = set.speaker.two) # Complete part 2) of HW2
+descriptive.stats(corpus.data = godot.data, speaker.one = set.speaker.one, speaker.two = set.speaker.two) # Complete part 3) of HW2
