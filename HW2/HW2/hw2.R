@@ -199,7 +199,39 @@ descriptive.stats <- function(corpus.data, speaker.one, speaker.two) {
 
 # 4. Hypothesis Testing
 hypothesis.test <- function() {
-
+  # e) Using the counts from question 1 above, perform a statistical test to determine whether presence of 
+  #    <choose-your-word> depends on Speaker. Choose either a Chi-square test or a Fisher’s exact test based
+  #    upon your sample size. Explain your choice and tell how you ran the test. Provide your results and interpret 
+  #    them. Interpret the p-value. For this statistical test, your alternative hypothesis HA is “The probability 
+  #    of <choose-your-word> occurring in an utterance is different conditioned upon who the speaker was.” 
+  #    The null hypothesis H0 is “The probability of <choose-your-word> is not significantly different conditioned
+  #    upon who the speaker was.”
+  #    Note: The word chosen is "Godot" and Fisher's exact test was chosen because of it's accuracy with a small sample 
+  #    Size and in the case of our dataset, we assumed 1200 utterances to be "small"
+  
+  # fisher's test
+  if (nrow(corpus.data) < 1300){
+    
+  }
+  # Chi-square test
+  else if (nrow(corpus.data) >= 1300){
+    
+  }
+  else{
+    cat("Something has gone wrong, please analyze your data set.")
+  }
+  
+  
+  
+  # f) You are given the following HA: Speaker 1 said more words in this corpus than Speaker 2. Based on your data, 
+  #    can you test this hypothesis with a statistical test? If so, explain the test and present your findings. If 
+  #    not, explain why.
+  
+  
+  # g) You are asked to determine whether Speaker 1’s utterances contained more words on average than Speaker 2’s 
+  #    utterances. Write the corresponding alternative and null hypotheses, perform the appropriate statistical test 
+  #    (explain why it is appropriate), and interpret your finding.
+  
 }
 
 # 5. Practice with Defintions
