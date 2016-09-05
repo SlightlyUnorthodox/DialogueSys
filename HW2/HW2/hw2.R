@@ -14,13 +14,14 @@ setup <- function(data.file = "godot.corpus.csv", speaker.col = 'speaker', dialo
 
     if (data.file == "godot.corpus.csv") {
         # Remove rows with both speakers
-        corpus.data <- godot.data[which(corpus.data$speaker %in% c("ESTRAGON", "VLADIMIR")),]
+        corpus.data <- corpus.data[which(corpus.data$speaker %in% c("ESTRAGON", "VLADIMIR")),]
         corpus.data <- droplevels(corpus.data)
         corpus.data <- corpus.data[which(complete.cases(corpus.data) == TRUE),]
     } else {
         # If using alternate data source, ensure standard column names exist
         corpus.data$speaker <- corpus.data[, speaker.col]
         corpus.data$norm.dialogue <- corpus.data[, dialogue.col]
+        corpus.data$length <- sapply(corpus.data$norm.dialogue, function(x) length(unlist(strsplit(as.character(x), "\\W+"))))
     }
 
     return(corpus.data)
@@ -157,8 +158,27 @@ sequence.analysis <- function(corpus.data, speaker.one, speaker.two) {
 }
 
 # 3. Descriptive Statistics
-descriptive.stats <- function() {
+descriptive.stats <- function(corpus.data, speaker.one, speaker.two) {
 
+    # a) What is the median number of words per utterance for Speaker 1 in your data? For speaker 2?
+    speaker.one.median <- median(corpus.data[which(corpus.data$speaker == speaker.one), "length"])
+    speaker.two.median <- median(corpus.data[which(corpus.data$speaker == speaker.two), "length"])
+    
+    cat("Speaker one", speaker.one, ", spoke a median of", speaker.one.median, "per utterance\n")
+    cat("Speaker two", speaker.two, ", spoke a median of", speaker.two.median, "per utterance\n")
+
+    # b) What is the mode number of words per utterance for Speaker 1 and Speaker 2 ?
+    speaker.one.mode <- unique(corpus.data[which(corpus.data$speaker == speaker.one), "length"])
+    speaker.one.mode <- speaker.one.mode[which.max(tabulate(match(corpus.data[which(corpus.data$speaker == speaker.one), "length"], speaker.one.mode)))]
+    speaker.one.mode <- unique(corpus.data[which(corpus.data$speaker == speaker.one), "length"])
+    speaker.one.mode <- speaker.one.mode[which.max(tabulate(match(corpus.data[which(corpus.data$speaker == speaker.one), "length"], speaker.one.mode)))]
+
+    cat("Speaker one", speaker.one, ", spoke a mode of", speaker.one.mode, "per utterance\n")
+    cat("Speaker two", speaker.two, ", spoke a mode of", speaker.two.mode, "per utterance\n")
+
+    # c) What is the standard deviation for the number of words per utterance for Speaker 1 and Speaker 2 ?
+    
+    # d) Create a histogram of number of words per utterance for Speaker 1 and for Speaker 2. Provide the histogram in your writeup along with discussion and interpretation
 }
 
 # 4. Hypothesis Testing
