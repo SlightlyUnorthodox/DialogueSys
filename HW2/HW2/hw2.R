@@ -158,7 +158,17 @@ sequence.analysis <- function(corpus.data, speaker.one, speaker.two) {
 
 # 3. Descriptive Statistics
 descriptive.stats <- function() {
-    
+  #Compute the following descriptive statistics on your data, using R. (If you already did portions of this this as part of Project 1, you may report the same findings here and no additional work would be needed.)
+  # a) What is the median number of words per utterance for Speaker 1 in your data? For speaker 2?
+  
+  
+  # b) What is the mode number of words per utterance for Speaker 1 and Speaker 2?
+  
+  # c) What is the standard deviation for the number of words per utterance for Speaker 1 and Speaker 2?
+  
+  # d) Create a histogram of number of words per utterance for Speaker 1 and for Speaker 2. Provide the histogram in your writeup along with discussion and interpretation.
+  
+  
 }
 
 # 4. Hypothesis Testing
