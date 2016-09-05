@@ -236,22 +236,23 @@ hypothesis.test <- function() {
 
 # 5. Practice with Defintions
 definition.practice <- function() {
-    quote <- "Good night, good night! Parting is such sweet sorrow, that I shall say good night till it be morrow."
-
-    # a) How many tokens are in this quote? (not including punctuation)
-    #     - There are 19 distinct tokens in this quote. Each word and word/punctuation combo is its own token.
-    
-    # b) How many distinct word types?
-    #     - There are 15 distinct word types. "Good night" is repeated twice.
-
-    # c) Identify verb in quote which, when stemmed remains unchanged. 
-    #     - Say?
-
-    # d) Identify a verb in the quote that is an example of inflectional morphology. Explain by providing its stem and noting how it is inflected.
-    #     - Say.
-
-    # e) Identify a verb that is an example of derivational morphology (hint: the same verb appears twice in the above quote, in two different forms). Tell which one is the derived form.
-    #     - Parting (noun to verb)? but only shows up once, but is a derivational morphene? so wut
+  quote <- "Good night, good night! Parting is such sweet sorrow, that I shall say good night till it be morrow."
+  
+  # a) How many tokens are in this quote? (not including punctuation)
+  cat("A) There are 19 tokens in this quote. They are as follows: 'good' x3, 'night' x3, 'parting', 'is', 
+      'such', 'sweet', 'sorrow', 'that', 'I', 'shall', 'say', 'till', 'it', 'be', 'morrow'.\n")
+  
+  # b) How many distinct word types are in this quote?
+  cat("B) There are 15 distinct word types in this quote.\n")
+  
+  # c) Identify a verb in the quote which, when stemmed, remains unchanged.
+  cat("C) The verb that will remain unchanged is 'said'.\n")
+  
+  # d) Identify a verb in the quote that is an example of inflectional morphology. Explain by providing its stem and noting how it is inflected.
+  cat("D) 'Parting' is an example of inflectuional morphology, it stems from 'to part', it is inflected in the present tense. \n")
+  
+  # e) Identify a verb that is an example of derivational morphology (hint: the same verb appears twice in the above quote, in two different forms). Tell which one is the derived form.
+  cat("E) ")
 }
 
 # Executed Statements
