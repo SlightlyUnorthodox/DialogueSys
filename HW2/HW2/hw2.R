@@ -158,7 +158,7 @@ sequence.analysis <- function(corpus.data, speaker.one, speaker.two) {
 
 # 3. Descriptive Statistics
 descriptive.stats <- function() {
-
+    
 }
 
 # 4. Hypothesis Testing
@@ -171,14 +171,19 @@ definition.practice <- function() {
     quote <- "Good night, good night! Parting is such sweet sorrow, that I shall say good night till it be morrow."
 
     # a) How many tokens are in this quote? (not including punctuation)
+    #     - There are 19 distinct tokens in this quote. Each word and word/punctuation combo is its own token.
+    
+    # b) How many distinct word types?
+    #     - There are 15 distinct word types. "Good night" is repeated twice.
 
-    # b)
+    # c) Identify verb in quote which, when stemmed remains unchanged. 
+    #     - Say?
 
-    # c)
+    # d) Identify a verb in the quote that is an example of inflectional morphology. Explain by providing its stem and noting how it is inflected.
+    #     - Say.
 
-    # d)
-
-    # e)
+    # e) Identify a verb that is an example of derivational morphology (hint: the same verb appears twice in the above quote, in two different forms). Tell which one is the derived form.
+    #     - Parting (noun to verb)? but only shows up once, but is a derivational morphene? so wut
 }
 
 # Executed Statements
