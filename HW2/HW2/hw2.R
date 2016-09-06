@@ -94,6 +94,8 @@ contingency.table <- function(corpus.data, word, speaker.one, speaker.two) {
     prob.vii <- ((table.data[which(table.data$speaker == speaker.two & table.data$contains.word == TRUE), "freq"] / contains.total))
     cat("vii. P(u being from Speaker 2 | u contains < choose - your - word >) =", prob.vii, "\n")
 
+    # Return word counts for use in question 4
+    return(table.data)
 }
 
 # 2. Sequence Analysis
@@ -141,7 +143,7 @@ sequence.analysis <- function(corpus.data, speaker.one, speaker.two) {
     cat("The most common trigram in", substitute(corpus.data), "is [", as.character(all.token.freq$x[1]), "]\n")
     cat("The most common trigram for", speaker.one, "is [", as.character(speaker.one.token.freq$x[1]), "]\n")
     cat("The most common trigram for", speaker.two, "is [", as.character(speaker.two.token.freq$x[1]), "]\n")
-    
+
     # d) From your corpus, given that Speaker 1 just finished a dialogue turn, what is the probability that the next dialogue turn will be Speaker 2 ?
     total.turns <- dim(corpus.data)[1]
     speaker.two.turns <- dim(corpus.data[which(corpus.data$speaker == "ESTRAGON"),])[1]
@@ -153,7 +155,7 @@ sequence.analysis <- function(corpus.data, speaker.one, speaker.two) {
         }
     }
 
-    prob.follow <- ((follows/total.turns)/(speaker.two.turns/total.turns))
+    prob.follow <- ((follows / total.turns) / (speaker.two.turns / total.turns))
     cat("The probability that", speaker.two, "will follow", speaker.one, "is equal to", prob.follow, "\n")
 
 }
@@ -167,9 +169,9 @@ descriptive.stats <- function(corpus.data, speaker.one, speaker.two) {
     # a) What is the median number of words per utterance for Speaker 1 in your data? For speaker 2?
     speaker.one.median <- median(speaker.one.length)
     speaker.two.median <- median(speaker.two.length)
-    
-    cat("Speaker one", speaker.one, ", spoke a median of", speaker.one.median, "words per utterance\n")
-    cat("Speaker two", speaker.two, ", spoke a median of", speaker.two.median, "words per utterance\n")
+
+    cat("Speaker one,", speaker.one, ", spoke a median of", speaker.one.median, "words per utterance\n")
+    cat("Speaker two,", speaker.two, ", spoke a median of", speaker.two.median, "words per utterance\n")
 
     # b) What is the mode number of words per utterance for Speaker 1 and Speaker 2 ?
     speaker.one.mode <- unique(speaker.one.length)
@@ -177,19 +179,19 @@ descriptive.stats <- function(corpus.data, speaker.one, speaker.two) {
     speaker.two.mode <- unique(speaker.two.length)
     speaker.two.mode <- speaker.two.mode[which.max(tabulate(match(speaker.two.length, speaker.two.mode)))]
 
-    cat("Speaker one", speaker.one, ", spoke a mode of", speaker.one.mode, "words per utterance\n")
-    cat("Speaker two", speaker.two, ", spoke a mode of", speaker.two.mode, "words per utterance\n")
+    cat("Speaker one,", speaker.one, ", spoke a mode of", speaker.one.mode, "words per utterance\n")
+    cat("Speaker two,", speaker.two, ", spoke a mode of", speaker.two.mode, "words per utterance\n")
 
     # c) What is the standard deviation for the number of words per utterance for Speaker 1 and Speaker 2 ?
     speaker.one.sd <- sd(speaker.one.length)
     speaker.two.sd <- sd(speaker.two.length)
 
-    cat("Speaker one", speaker.one, ", spoke with a standard deviation of", speaker.one.sd, "words per utterance\n")
-    cat("Speaker two", speaker.two, ", spoke with a standard deviation of", speaker.two.sd, "words per utterance\n")
+    cat("Speaker one,", speaker.one, ", spoke with a standard deviation of", speaker.one.sd, "words per utterance\n")
+    cat("Speaker two,", speaker.two, ", spoke with a standard deviation of", speaker.two.sd, "words per utterance\n")
 
     # d) Create a histogram of number of words per utterance for Speaker 1 and for Speaker 2. Provide the histogram in your writeup along with discussion and interpretation
-    ggplot(corpus.data, aes(length, fill = speaker)) + 
-    geom_histogram(alpha = 0.5, bins = 20, position = 'identity') + 
+    ggplot(corpus.data, aes(length, fill = speaker)) +
+    geom_histogram(alpha = 0.5, bins = 20, position = 'identity') +
     xlim(0, 50) +
     xlab("# of Words per Utterance") +
     ylab("Frequency") +
@@ -198,7 +200,7 @@ descriptive.stats <- function(corpus.data, speaker.one, speaker.two) {
 }
 
 # 4. Hypothesis Testing
-hypothesis.test <- function() {
+hypothesis.test <- function(corpus.data, speaker.one, speaker.two, word.counts) {
   # e) Using the counts from question 1 above, perform a statistical test to determine whether presence of 
   #    <choose-your-word> depends on Speaker. Choose either a Chi-square test or a Fisher’s exact test based
   #    upon your sample size. Explain your choice and tell how you ran the test. Provide your results and interpret 
@@ -208,57 +210,63 @@ hypothesis.test <- function() {
   #    upon who the speaker was.”
   #    Note: The word chosen is "Godot" and Fisher's exact test was chosen because of it's accuracy with a small sample 
   #    Size and in the case of our dataset, we assumed 1200 utterances to be "small"
-  
+
   # fisher's test
-  if (nrow(corpus.data) < 1300){
-    
-  }
+    if (nrow(corpus.data) < 1300) {
+
+    }
   # Chi-square test
-  else if (nrow(corpus.data) >= 1300){
-    
-  }
-  else{
-    cat("Something has gone wrong, please analyze your data set.")
-  }
-  
-  
-  
+    else if (nrow(corpus.data) >= 1300) {
+
+    }
+    else {
+        cat("Something has gone wrong, please analyze your data set.")
+    }
+
+
+
   # f) You are given the following HA: Speaker 1 said more words in this corpus than Speaker 2. Based on your data, 
   #    can you test this hypothesis with a statistical test? If so, explain the test and present your findings. If 
   #    not, explain why.
-  
-  
+
+
   # g) You are asked to determine whether Speaker 1’s utterances contained more words on average than Speaker 2’s 
   #    utterances. Write the corresponding alternative and null hypotheses, perform the appropriate statistical test 
   #    (explain why it is appropriate), and interpret your finding.
-  
+
 }
 
 # 5. Practice with Defintions
 definition.practice <- function() {
-  quote <- "Good night, good night! Parting is such sweet sorrow, that I shall say good night till it be morrow."
-  
-  # a) How many tokens are in this quote? (not including punctuation)
-  cat("A) There are 19 tokens in this quote. They are as follows: 'good' x3, 'night' x3, 'parting', 'is', 
-      'such', 'sweet', 'sorrow', 'that', 'I', 'shall', 'say', 'till', 'it', 'be', 'morrow'.\n")
-  
-  # b) How many distinct word types are in this quote?
-  cat("B) There are 15 distinct word types in this quote.\n")
-  
+
+    # Define strings of interest, given and normalized (punctuation removed, all lower-case)
+    quote <- "Good night, good night! Parting is such sweet sorrow, that I shall say good night till it be morrow."
+    normalized.quote <- "good night good night parting is such sweet sorrow that i shall say good night till it be morrow"
+
+    # a) How many tokens are in this quote? (not including punctuation)
+    tokens <- ngramrr(normalized.quote, ngmin = 1, ngmax = 1)
+    cat("a) There are", length(tokens), "tokens in this quote. They are as follows:\n", tokens)
+
+    # b) How many distinct word types are in this quote?
+    word.types <- unique(tokens)
+    cat("b) There are", word.types, "distinct word types in this quote. They are as follows:\n", word.types)
+
   # c) Identify a verb in the quote which, when stemmed, remains unchanged.
-  cat("C) The verb that will remain unchanged is 'said'.\n")
-  
+    cat("C) The verb that will remain unchanged is 'said'.\n")
+
   # d) Identify a verb in the quote that is an example of inflectional morphology. Explain by providing its stem and noting how it is inflected.
-  cat("D) 'Parting' is an example of inflectuional morphology, it stems from 'to part', it is inflected in the present tense. \n")
-  
+    cat("D) 'Parting' is an example of inflectuional morphology, it stems from 'to part', it is inflected in the present tense. \n")
+
   # e) Identify a verb that is an example of derivational morphology (hint: the same verb appears twice in the above quote, in two different forms). Tell which one is the derived form.
-  cat("E) ")
+    cat("E) ")
 }
 
 # Executed Statements
 set.speaker.one <- "ESTRAGON"
 set.speaker.two <- "VLADIMIR"
 godot.data <- setup() # Load data from local source
-contingency.table(corpus.data = godot.data, word = "godot", speaker.one = set.speaker.one, speaker.two = set.speaker.two) # Complete part 1) of HW2
+godot.counts <- contingency.table(corpus.data = godot.data, word = "godot", speaker.one = set.speaker.one, speaker.two = set.speaker.two) # Complete part 1) of HW2
 sequence.analysis(corpus.data = godot.data, speaker.one = set.speaker.one, speaker.two = set.speaker.two) # Complete part 2) of HW2
 descriptive.stats(corpus.data = godot.data, speaker.one = set.speaker.one, speaker.two = set.speaker.two) # Complete part 3) of HW2
+hypothesis.test(corpus.data = godot.data, speaker.one = set.speaker.one, speaker.two = set.speaker.two, godot.counts) # Complete part 4) of HW2
+definition.practice() # Complete part 5) of HW2
