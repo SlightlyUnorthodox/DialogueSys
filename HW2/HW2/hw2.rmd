@@ -1,0 +1,18 @@
+---
+title: "CIS 4930: HW2"
+author: Dax Gerts, Christine Moore, Sara Lichtenstein
+date: September 9th, 2016
+output: html_document
+---
+
+# Introduction
+
+# 1. Contingency Tables
+
+# 2. Sequence Analysis
+
+# 3. Descriptive Statistics
+
+# 4. Hypothesis Testing
+
+# 5. Practice with Definitions

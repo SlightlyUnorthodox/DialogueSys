@@ -8,7 +8,7 @@ setup <- function(data.file = "godot.corpus.csv", speaker.col = 'speaker', dialo
     library(ggplot2)
     library(ngramrr)
     library(NLP)
-    #library(openNLP)
+    library(openNLP)
 
     # Load data extracted in hw1
     corpus.data <- read.csv(data.file, header = TRUE, sep = ",")
@@ -38,11 +38,10 @@ contingency.table <- function(corpus.data, word, speaker.one, speaker.two) {
 
     # Create contingency table
     contingency.table <- table(corpus.data$speaker, corpus.data$contains.word)
-    contingency.table <- addmargins(contingency.table)
-    print(contingency.table)
+    print(addmargins(contingency.table))
 
     # Save contingency table values for part b)
-    table.data <- data.frame(contingency.table)
+    table.data <- data.frame(addmargins(contingency.table))
     names(table.data) <- c("speaker", "contains.word", "freq")
 
     # b)
@@ -95,7 +94,7 @@ contingency.table <- function(corpus.data, word, speaker.one, speaker.two) {
     cat("vii. P(u being from Speaker 2 | u contains < choose - your - word >) =", prob.vii, "\n")
 
     # Return word counts for use in question 4
-    return(table.data)
+    return(contingency.table)
 }
 
 # 2. Sequence Analysis
@@ -200,7 +199,7 @@ descriptive.stats <- function(corpus.data, speaker.one, speaker.two) {
 }
 
 # 4. Hypothesis Testing
-hypothesis.test <- function(corpus.data, speaker.one, speaker.two, word.counts) {
+hypothesis.test <- function(corpus.data, speaker.one, speaker.two, corpus.table) {
   # e) Using the counts from question 1 above, perform a statistical test to determine whether presence of 
   #    <choose-your-word> depends on Speaker. Choose either a Chi-square test or a Fisher’s exact test based
   #    upon your sample size. Explain your choice and tell how you ran the test. Provide your results and interpret 
@@ -212,12 +211,12 @@ hypothesis.test <- function(corpus.data, speaker.one, speaker.two, word.counts) 
   #    Size and in the case of our dataset, we assumed 1200 utterances to be "small"
 
   # fisher's test
-    if (nrow(corpus.data) < 1300) {
-
+    if (min(godot.table) < 5) {
+        fisher.test(corpus.table)
     }
   # Chi-square test
-    else if (nrow(corpus.data) >= 1300) {
-
+    else if (min(godot.table) >= 5) {
+        chisq.test(corpus.table)
     }
     else {
         cat("Something has gone wrong, please analyze your data set.")
@@ -252,21 +251,21 @@ definition.practice <- function() {
     cat("b) There are", word.types, "distinct word types in this quote. They are as follows:\n", word.types)
 
   # c) Identify a verb in the quote which, when stemmed, remains unchanged.
-    cat("C) The verb that will remain unchanged is 'said'.\n")
+    cat("c) A verb that will remain unchanged when stemmed is, 'is'.\n")
 
   # d) Identify a verb in the quote that is an example of inflectional morphology. Explain by providing its stem and noting how it is inflected.
-    cat("D) 'Parting' is an example of inflectuional morphology, it stems from 'to part', it is inflected in the present tense. \n")
+    cat("d) 'Parting' is an example of inflectuional morphology, it stems from 'to part', it is inflected in the present tense with the suffix, '-ing'. \n")
 
   # e) Identify a verb that is an example of derivational morphology (hint: the same verb appears twice in the above quote, in two different forms). Tell which one is the derived form.
-    cat("E) ")
+    cat("e)  \n")
 }
 
 # Executed Statements
 set.speaker.one <- "ESTRAGON"
 set.speaker.two <- "VLADIMIR"
 godot.data <- setup() # Load data from local source
-godot.counts <- contingency.table(corpus.data = godot.data, word = "godot", speaker.one = set.speaker.one, speaker.two = set.speaker.two) # Complete part 1) of HW2
+godot.table <- contingency.table(corpus.data = godot.data, word = "godot", speaker.one = set.speaker.one, speaker.two = set.speaker.two) # Complete part 1) of HW2
 sequence.analysis(corpus.data = godot.data, speaker.one = set.speaker.one, speaker.two = set.speaker.two) # Complete part 2) of HW2
 descriptive.stats(corpus.data = godot.data, speaker.one = set.speaker.one, speaker.two = set.speaker.two) # Complete part 3) of HW2
-hypothesis.test(corpus.data = godot.data, speaker.one = set.speaker.one, speaker.two = set.speaker.two, godot.counts) # Complete part 4) of HW2
+hypothesis.test(corpus.data = godot.data, speaker.one = set.speaker.one, speaker.two = set.speaker.two, corpus.table = godot.table) # Complete part 4) of HW2
 definition.practice() # Complete part 5) of HW2
