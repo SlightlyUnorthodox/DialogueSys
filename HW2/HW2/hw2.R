@@ -212,11 +212,11 @@ hypothesis.test <- function(corpus.data, speaker.one, speaker.two, corpus.table)
 
   # fisher's test
     if (min(godot.table) < 5) {
-        fisher.test(corpus.table)
+        print(fisher.test(corpus.table))
     }
   # Chi-square test
     else if (min(godot.table) >= 5) {
-        chisq.test(corpus.table)
+        print(chisq.test(corpus.table))
     }
     else {
         cat("Something has gone wrong, please analyze your data set.")
@@ -228,11 +228,15 @@ hypothesis.test <- function(corpus.data, speaker.one, speaker.two, corpus.table)
   #    can you test this hypothesis with a statistical test? If so, explain the test and present your findings. If 
   #    not, explain why.
 
-
+  # No, you can't test this hypothesis via a statistical test, because you can simply count which speaker spoke more words in this corpus.
+    
   # g) You are asked to determine whether Speaker 1’s utterances contained more words on average than Speaker 2’s 
   #    utterances. Write the corresponding alternative and null hypotheses, perform the appropriate statistical test 
   #    (explain why it is appropriate), and interpret your finding.
 
+    speaker.one.lengths <- corpus.data[which(corpus.data$speaker == speaker.one), "length"]
+    speaker.two.lengths <- corpus.data[which(corpus.data$speaker == speaker.two), "length"]
+    print(t.test(speaker.one.lengths, speaker.two.lengths))
 }
 
 # 5. Practice with Defintions
@@ -258,6 +262,8 @@ definition.practice <- function() {
 
   # e) Identify a verb that is an example of derivational morphology (hint: the same verb appears twice in the above quote, in two different forms). Tell which one is the derived form.
     cat("e)  \n")
+
+    
 }
 
 # Executed Statements
