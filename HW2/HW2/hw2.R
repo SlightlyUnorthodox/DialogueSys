@@ -261,7 +261,7 @@ definition.practice <- function() {
     cat("d) 'Parting' is an example of inflectuional morphology, it stems from 'to part', it is inflected in the present tense with the suffix, '-ing'. \n")
 
   # e) Identify a verb that is an example of derivational morphology (hint: the same verb appears twice in the above quote, in two different forms). Tell which one is the derived form.
-    cat("e)  \n")
+    cat("e) The example of derivational morphology are the verbs 'is' and 'be'. The origin verb is 'be', and 'is' is the third person singular indicative of 'be'. \n")
 
     
 }
