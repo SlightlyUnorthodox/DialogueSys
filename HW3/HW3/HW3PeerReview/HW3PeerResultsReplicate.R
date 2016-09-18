@@ -145,7 +145,7 @@ sequence.analysis <- function(corpus.data, speaker.one, speaker.two) {
 
     # d) From your corpus, given that Speaker 1 just finished a dialogue turn, what is the probability that the next dialogue turn will be Speaker 2 ?
     total.turns <- dim(corpus.data)[1]
-    speaker.two.turns <- dim(corpus.data[which(corpus.data$speaker == "ESTRAGON"),])[1]
+    speaker.two.turns <- dim(corpus.data[which(corpus.data$speaker == speaker.two),])[1]
     follows <- 0
 
     for (i in 1:(total.turns - 1)) {
@@ -153,7 +153,7 @@ sequence.analysis <- function(corpus.data, speaker.one, speaker.two) {
             follows <- follows + 1
         }
     }
-
+  
     prob.follow <- ((follows / total.turns) / (speaker.two.turns / total.turns))
     cat("The probability that", speaker.two, "will follow", speaker.one, "is equal to", prob.follow, "\n")
 
