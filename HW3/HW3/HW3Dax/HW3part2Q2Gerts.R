@@ -43,7 +43,7 @@ print(prop.table(table(state.sequence)))
 # d) If you eliminate edges with less than 0.01 probability, how do you interpret the graph now ? Explain why you would or would not want to do this.
 
 total <- length(state.sequence$current.step)
-min.freq <- (108 * 0.1)
+min.freq <- (108 * 0.01)
 counts <- ddply(state.sequence, .(state.sequence$current.step, state.sequence$next.step), nrow)
 names(counts) <- c("current.step", "next.step", "freq")
 

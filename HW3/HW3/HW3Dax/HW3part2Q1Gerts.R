@@ -99,7 +99,7 @@ create.ngrams <- function(corpora, size = 2) {
     return(ngrams)
 }
 
-train.model <- function(training.corpora, ngram.size = 2, smoothing = TRUE) {
+train.model <- function(training.corpora, ngram.size = 2) {
 
     # Bind corpora together
     training.data <- vector(mode = "character")
@@ -122,12 +122,6 @@ train.model <- function(training.corpora, ngram.size = 2, smoothing = TRUE) {
     total.tokens <- sum(freq)
     total.tokens.prior <- sum(freq.prior)
 
-    # Account for smoothing, if used
-    if (smoothing == TRUE) {
-        total.tokens <- total.tokens + (length(freq) * 1)
-        total.tokens.prior <- total.tokens.prior + (length(freq.prior) * 1)
-    }
-
     # Create data frame
     training.data <- data.frame(freq)
     names(training.data) <- c("ngram", "frequency")
@@ -135,12 +129,6 @@ train.model <- function(training.corpora, ngram.size = 2, smoothing = TRUE) {
     # Add leading segment information (ngrams size - 1)
     training.data$prior <- gsub(" [A-z0-9:?,\\. ]*", "", as.character(training.data$ngram))
     training.data$frequency.prior <- freq.prior[training.data$prior]
-
-    # Account for smoothing, if used
-    if (smoothing == TRUE) {
-        training.data$frequency <- training.data$frequency + 1
-        training.data$frequency <- training.data$frequency.prior + 1
-    }
 
     # Calculate relative frequency
     training.data$relative.frequency <- training.data$frequency/total.tokens
@@ -170,15 +158,15 @@ compute.perplexity <- function(training.set, test.set) {
         if (dim(match)[1] == 0) {
             prob <- 1
         } else {
-            prob <- as.double(match$relative.frequency) / as.double(match$relative.frequency.prior)
+            prob <- (0.1 + as.double(match$frequency.prior)) / (0.1 + as.double(match$frequency))
         }
         
-        perplex <- as.double(perplex * as.double(prob ^ -1))
+        perplex <- as.double(perplex * as.double(prob))
     }
 
 
     # Take the n-th root of the sum (n being number of tokens predicted)
-    perplex <- perplex ^ (1/tokens.predicted)
+    perplex <- 100 * (perplex ^ (1/tokens.predicted))
 
     # Return perplexity value
     return(perplex)
@@ -189,8 +177,8 @@ corpora <- setup() # Get local corpora and load required libraries
 corpora <- normalize.corpora(corpora) # Create normalized corpora columns
 
 # Create training sets for bigram model
-lb.train <- train.model(corpora[c("ga.address", "inaug.speech")], ngram.size = 2, smoothing = TRUE)
-mb.train <- train.model(corpora[c("prepared.to.die", "freedom.award")], ngram.size = 2, smoothing = TRUE)
+lb.train <- train.model(corpora[c("ga.address", "inaug.speech")], ngram.size = 2)
+mb.train <- train.model(corpora[c("prepared.to.die", "freedom.award")], ngram.size = 2)
 
 # Establish test sets
 lb.test <- corpora$inaug.speech.two
