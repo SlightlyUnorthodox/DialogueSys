@@ -9,7 +9,7 @@ library(plyr)
 # Executed Statements
 
 # Identify sequence
-sequence <- unlist(strsplit("M,Q,A,S,S,S,S,S,S,S,S,S,Q,A,S,Q,A,S,ACK,Q,A,Q,Q,S,S,ACK,S,S,ACK,U,S,ACK,Q,A,S,S,S,S,S,Q,F,ACK,Q,Q,S,D,Q,U,Q,ACK,Q,A,S,M,Q,S,M,S,Q,S,A,U,ACK,S,S,Q,D,D,Q,S,S,Q,A,Q,M,S,ACK,D,S,S,SU,Q,S,S,S,S,S,Q,A,Q,A,S,Q,A,Q,Q,A,Q,ACK,S,S,U,ACK,D,F,Q,A,S,U", split = ","))
+sequence <- unlist(strsplit("<s>,M,Q,A,S,S,S,S,S,S,S,S,S,Q,A,S,Q,A,S,ACK,Q,A,Q,Q,S,S,ACK,S,S,ACK,U,S,ACK,Q,A,S,S,S,S,S,Q,F,ACK,Q,Q,S,D,Q,U,Q,ACK,Q,A,S,M,Q,S,M,S,Q,S,A,U,ACK,S,S,Q,D,D,Q,S,S,Q,A,Q,M,S,ACK,D,S,S,SU,Q,S,S,S,S,S,Q,A,Q,A,S,Q,A,Q,Q,A,Q,ACK,S,S,U,ACK,D,F,Q,A,S,U,</s>", split = ","))
 
 # Redefine sequence as data frame
 state.sequence <- data.frame(sequence[1:(length(sequence) - 1)], sequence[2:length(sequence)])
